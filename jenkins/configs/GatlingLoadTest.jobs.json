@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Gatling.Load.Test",
+    "scriptPath": "jenkins/pipelines/GatlingLoadTest.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/main",
+      "credential": "pipeline_access_token"
+    }
+  }
+]
