@@ -38,5 +38,5 @@ If you make your jobs using Job DSL, you can make them just one click using Job 
 1. Build Job and see the success result.
    ![job_dsl_build_success](../resource/images/job_dsl_build_success.png)
 
-2. Check the View and jobs you've added
-   
+2. Check the View and jobs you've added.
+   ![built_jobs_by_job_dsl](../resource/images/built_jobs_by_job_dsl.png)
