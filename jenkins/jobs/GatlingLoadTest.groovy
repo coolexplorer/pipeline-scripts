@@ -2,7 +2,7 @@ import groovy.json.JsonSlurper
 
 def jobList = new JsonSlurper().parseText(new File("${WORKSPACE}/jenkins/configs/GatlingLoadTest.jobs.json").text)
 
-jobList.jobs.each { job ->
+jobList.each { job ->
     pipelineJob(job.name) {
         blockOn([job.name]) {
             blockLevel('NODE')
