@@ -11,9 +11,10 @@ To use the pipeline in Jenkins, there are several plugins. In this project, I'm 
 1. Install plugins
    * Pipeline (including Pipeline:Groovy, Pipeline: Shared Groovy Libraries)
     ![pipleline_groovy_plugin](./resource/images/pipeline_groovy_plugin.png)
-   * Job DSL 
+   * Job DSL : To build Job DSL script
    * Git plugin
    * Kubernetes plugin
+   * Sectioned View : To creat section view
 
 2. Security option
    You will see error related to the security when you build Job DSL scripts. You can allow them one by one after checking in `Manage Jenkins > Security > In-process Script Approval`
