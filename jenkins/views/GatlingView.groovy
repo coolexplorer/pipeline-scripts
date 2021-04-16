@@ -20,7 +20,7 @@ sectionedView('Gatling') {
         listView {
             name('Test Conduction')
             jobs {
-                regex(/Conduct.*/)
+                regex(/Gatling.Load.Test.*/)
             }
             columns {
                 status()
