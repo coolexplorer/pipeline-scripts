@@ -28,9 +28,9 @@ If you make your jobs using Job DSL, you can make them just one click using Job 
 
 1. Create Freestyle job - `New Item > Freestyle project`
 2. Add `Source code Management`. Connect this repository.
-   * Add repository information
+   * Add repository information.
     ![source_management](../resource/images/build_job_dsl_source_management.png)
-   * Add `Process Job DSLs` in `Build` Tab with the script path
+   * Add `Process Job DSLs` in `Build` Tab with the script path.
     ![job_dsl_build](../resource/images/build_job_dsl.png)
 
 ## Run Job DSL build job
