@@ -4,7 +4,7 @@
     "scriptPath": "jenkins/pipelines/GatlingLoadTest.groovy",
     "git": {
       "url": "https://github.com/coolexplorer/pipeline-scripts.git",
-      "branch": "*/main",
+      "branch": "*/add_build_job_dsl_job",
       "credential": "pipeline_access_token"
     }
   }
