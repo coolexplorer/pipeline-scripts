@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            yamlFile 'agent/k8s/maven.yaml'
+            yamlFile 'jennkins/agent/k8s/maven.yaml'
         }
     }
     stages {
