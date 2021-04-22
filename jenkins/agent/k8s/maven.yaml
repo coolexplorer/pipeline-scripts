@@ -7,9 +7,6 @@ metadata:
 spec:
   containers:
   - name: jnlp
-    image: jenkinsci/jnlp-slave
-    command:
-    - cat
     env:
     - name: CONTAINER_ENV_VAR
       value: jnlp
