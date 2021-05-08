@@ -1,6 +1,6 @@
 import groovy.json.JsonSlurper
 
-def jobList = new JsonSlurper().parseText(new File("jenkins/configs/GatlingLoadTest.jobs.json").text)
+def jobList = new JsonSlurper().parseText(new File("${WORKSPACE}/jenkins/configs/GatlingLoadTest.jobs.json").text)
 
 jobList.each { job ->
     pipelineJob(job.name) {
