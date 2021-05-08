@@ -18,3 +18,20 @@ If you make your jobs using Job DSL, you can make them just one click using Job 
 
 2. Check the View and jobs you've added.  
    ![built_jobs_by_job_dsl](../../resource/images/built_jobs_by_job_dsl.png)
+
+## Trouble shooting
+
+1. `ERROR: script not yet approved for use`
+   * Error logs
+   ```console
+   Warning: Plugins have been installed without restarting Jenkins. A restart is required to run Job DSL without any problems.
+   Processing DSL script jenkins/jobs/GatlingLoadTest.groovy
+   ERROR: script not yet approved for use
+   Finished: FAILURE
+   ```
+   * Solution
+   `Jenkins manage` > `In-process Script Approral` > `Approve`
+   ![troubleshooting-1-1](../../resource/images/troubleshooting-1-1.png)
+   
+
+
