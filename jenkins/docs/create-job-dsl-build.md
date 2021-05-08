@@ -1,5 +1,11 @@
 # Job DSL build Job 
 
+## Prerequisites
+In my environment, basically running in the kubernetes and will use `pod template` to make slave agents for running our pipeline scripts. 
+However, Job DSL build must use the executor in the master node so that they can make the job on the master environment. Jenkins will create the pod template if your master do not have the executor. (Default is 0) Please check the count `1` and run the job. 
+![node_executor_edit](../../resource/images/node_executor_edit.png)
+
+
 ## Job creation
 
 If you make your jobs using Job DSL, you can make them just one click using Job DSL build job. 
@@ -33,5 +39,7 @@ If you make your jobs using Job DSL, you can make them just one click using Job 
    `Jenkins manage` > `In-process Script Approral` > `Approve`
    ![troubleshooting-1-1](../../resource/images/troubleshooting-1-1.png)
    
+2. `No such file or directory`
+   Make sure do not insert `space` or `.` for the job name of Building Job DSL. In the Job DSL file, calling the config file by the path and those special characters make an issue whenever this script is built. Normally, use `Build_Job_DSL`.
 
 
