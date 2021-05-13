@@ -21,7 +21,7 @@ pipeline {
                 container('maven') {
                     dir('maven-gatling') {
                         sh 'ls -al'
-                        sh 'mvn gatling:execute'
+                        sh 'mvn gatling:test'
                     }
                 }
             }
