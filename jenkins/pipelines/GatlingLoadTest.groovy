@@ -45,9 +45,9 @@ pipeline {
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: 'coverage',
+                            reportDir: 'maven-gatling/target/gatling/report',
                             reportFiles: 'index.html',
-                            reportName: 'RCov Report'
+                            reportName: 'Gatlinge report'
                         ]
                     }
                 }
