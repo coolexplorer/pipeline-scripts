@@ -50,7 +50,7 @@ pipeline {
                         script {
                             def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk '{print \$9}'", returnStdout: true
 
-                            sh "cp ./${resultPath}/${simulationPath.trim()}/simulation.log ./${reportPath}/simulation.log"
+                            sh "cp ${resultPath}/${simulationPath.trim()}/simulation.log ${reportPath}/simulation.log"
 
                             sh 'mvn gatling:test -Dgatling.reportsOnly=report'
                         }
@@ -67,7 +67,7 @@ pipeline {
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: "maven-gatling/${reportPath}",
+                            reportDir: "${reportPath}",
                             reportFiles: 'index.html',
                             reportName: 'Gatlinge report'
                         ]
