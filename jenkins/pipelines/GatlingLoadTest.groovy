@@ -20,7 +20,7 @@ pipeline {
             steps {
                 container('maven') {
                     dir('maven-gatling') {
-                        sh 'mvn gatling:test -Dgatling.noReports=true'
+                        sh 'mvn gatling:test'
                     }
                 }
             }
