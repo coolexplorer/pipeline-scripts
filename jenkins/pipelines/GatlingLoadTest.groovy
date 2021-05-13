@@ -46,7 +46,7 @@ pipeline {
                 container('maven') {
                     dir('maven-gatling') {
                         
-                        simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk '{print \$10}'", returnStdout: true
+                        simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk \'{print \$10}\'", returnStdout: true
                         echo "${simulationPath}"
                         sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}"
 
