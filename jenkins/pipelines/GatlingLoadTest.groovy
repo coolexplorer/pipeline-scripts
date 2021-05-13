@@ -19,10 +19,9 @@ pipeline {
         stage('Run maven version') {
             steps {
                 container('maven') {
-                    dir('maven-gatling')
-                    {
+                    dir('maven-gatling') {
                         sh 'ls -al'
-                        sh 'mvn execute'
+                        sh 'mvn gatling:execute'
                     }
                 }
             }
