@@ -20,8 +20,35 @@ pipeline {
             steps {
                 container('maven') {
                     dir('maven-gatling') {
+                        sh 'mvn gatling:test -Dgatling.noReports=true'
+                    }
+                }
+            }
+        }
+
+        stage('Generate Gatling report') {
+            steps {
+                container('maven') {
+                    dir('maven-gatling') {
+                        sh 'mvn gatling:test -Dgatling.reportsOnly=report'
                         sh 'ls -al'
-                        sh 'mvn gatling:test'
+                    }
+                }
+            }
+        }
+
+        stage('Publish gatling report') {
+            steps {
+                container('maven') {
+                    dir('maven-gatling') {
+                        publishHTML target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'coverage',
+                            reportFiles: 'index.html',
+                            reportName: 'RCov Report'
+                        ]
                     }
                 }
             }
