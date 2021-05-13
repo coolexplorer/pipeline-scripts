@@ -14,7 +14,7 @@ pipeline {
         stage('Run maven version') {
             steps {
                 container('maven') {
-                    sh 'mvn test'
+                    sh 'mvn execute'
                 }
             }
         }
