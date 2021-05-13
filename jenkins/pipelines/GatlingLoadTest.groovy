@@ -49,8 +49,10 @@ pipeline {
                     dir('maven-gatling') {
                         script {
                             def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk '{print \$9}'", returnStdout: true
+
                             echo "${simulationPath}"
-                            sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}"
+                            sh "ls -al ${resultPath}/${simulationPath}/"
+                            sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}/"
 
                             sh 'mvn gatling:test -Dgatling.reportsOnly=report'
                         }
