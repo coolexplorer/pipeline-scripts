@@ -1,5 +1,7 @@
-reportPath = "target/gatling/report"
-resultPath = "target/gatling"
+#!/usr/bin/env groovy
+
+def reportPath = "target/gatling/report"
+def resultPath = "target/gatling"
 
 pipeline {
     agent {
@@ -46,7 +48,7 @@ pipeline {
                 container('maven') {
                     dir('maven-gatling') {
                         
-                        simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk \'{print \$10}\'", returnStdout: true
+                        def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk \"{print \$10}\"", returnStdout: true
                         echo "${simulationPath}"
                         sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}"
 
