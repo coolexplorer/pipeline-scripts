@@ -1,9 +1,12 @@
+reportPath = "target/gatling/report"
+
 pipeline {
     agent {
         kubernetes {
             yamlFile 'jenkins/agent/k8s/maven.yaml'
         }
     }
+
     stages {
         stage('Clone the source') {
             steps {
@@ -16,7 +19,18 @@ pipeline {
                 )
             }
         }
-        stage('Run maven version') {
+
+        stage('Initialize Gatling test') {
+            steps {
+                container('maven') {
+                    dir('maven-gatling') {
+                        sh "mkdir -p ${reportPath}"
+                    }
+                }
+            }
+        }
+
+        stage('Run Gatling test') {
             steps {
                 container('maven') {
                     dir('maven-gatling') {
@@ -45,7 +59,7 @@ pipeline {
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: 'maven-gatling/target/gatling/report',
+                            reportDir: "maven-gatling/${${reportPath}".
                             reportFiles: 'index.html',
                             reportName: 'Gatlinge report'
                         ]
