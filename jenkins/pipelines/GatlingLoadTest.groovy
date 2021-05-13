@@ -1,4 +1,5 @@
 reportPath = "target/gatling/report"
+resultPath = "target/gatling"
 
 pipeline {
     agent {
@@ -44,8 +45,12 @@ pipeline {
             steps {
                 container('maven') {
                     dir('maven-gatling') {
+                        
+                        def simulationPath = sh(script: "ls -l ${resultPath} | grep loadtestsimulation | awk \'{print $10}\'", returnStdout: true)
+                        echo "${simulationPath}"
+                        sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}"
+
                         sh 'mvn gatling:test -Dgatling.reportsOnly=report'
-                        sh 'ls -al'
                     }
                 }
             }
