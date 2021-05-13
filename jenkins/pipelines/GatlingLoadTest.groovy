@@ -59,7 +59,7 @@ pipeline {
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: "maven-gatling/${${reportPath}",
+                            reportDir: "maven-gatling/${reportPath}",
                             reportFiles: 'index.html',
                             reportName: 'Gatlinge report'
                         ]
