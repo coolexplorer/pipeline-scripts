@@ -12,6 +12,7 @@ jobList.each { job ->
 
         parameters {
             stringParam('TargetServer', job.target, 'Target Server')
+            stringParam('Branch', job.branch, 'Source Branch')
         }
 
         logRotator {

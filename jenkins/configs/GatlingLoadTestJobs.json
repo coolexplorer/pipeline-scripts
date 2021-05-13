@@ -5,7 +5,8 @@
     "git": {
       "url": "https://github.com/coolexplorer/pipeline-scripts.git",
       "branch": "*/Add_build_job_dsl_job",
-      "credential": "pipeline_access_token"
-    }
+      "credential": "pipeilne_access_token"
+    },
+    "branch": "main"
   }
 ]
