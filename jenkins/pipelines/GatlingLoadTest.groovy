@@ -52,7 +52,7 @@ pipeline {
 
                             echo "${simulationPath}"
                             sh "ls -al ${resultPath}/${simulationPath}"
-                            sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}/"
+                            sh "cp ${resultPath}/${simulationPath}/simulation.log ${reportPath}/simulation.log"
 
                             sh 'mvn gatling:test -Dgatling.reportsOnly=report'
                         }
