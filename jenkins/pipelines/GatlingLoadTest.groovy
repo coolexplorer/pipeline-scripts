@@ -50,8 +50,7 @@ pipeline {
                         script {
                             def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk '{print \$9}'", returnStdout: true
 
-                            echo "cp ./${resultPath}/${simulationPath}/simulation.log ./${reportPath}/simulation.log"
-                            sh "cp ./${resultPath}/${simulationPath}/simulation.log ./${reportPath}/simulation.log"
+                            sh "cp ./${resultPath}/${simulationPath.trim()}/simulation.log ./${reportPath}/simulation.log"
 
                             sh 'mvn gatling:test -Dgatling.reportsOnly=report'
                         }
