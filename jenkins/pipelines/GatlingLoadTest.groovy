@@ -46,8 +46,8 @@ pipeline {
         stage('Generate Gatling report') {
             steps {
                 container('maven') {
-                    script {
-                        dir('maven-gatling') {
+                    dir('maven-gatling') {
+                        script {
                             def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk \"{print \$10}\"", returnStdout: true
                             echo "${simulationPath}"
                             sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}"
