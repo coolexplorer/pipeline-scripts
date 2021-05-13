@@ -25,6 +25,10 @@ If you make your jobs using Job DSL, you can make them just one click using Job 
 2. Check the View and jobs you've added.  
    ![built_jobs_by_job_dsl](../../resource/images/built_jobs_by_job_dsl.png)
 
+3. Add Build triggers to check changes in regular basis. Every 10 minutes, check the respository. 
+   ![job_dsl_build_poll_scm](../../resource/images/job_dsl_build_poll_scm.png)
+
+
 ## Trouble shooting
 
 1. `ERROR: script not yet approved for use`
