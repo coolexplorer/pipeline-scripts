@@ -46,13 +46,14 @@ pipeline {
         stage('Generate Gatling report') {
             steps {
                 container('maven') {
-                    dir('maven-gatling') {
-                        
-                        def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk \"{print \$10}\"", returnStdout: true
-                        echo "${simulationPath}"
-                        sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}"
+                    script {
+                        dir('maven-gatling') {
+                            def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk \"{print \$10}\"", returnStdout: true
+                            echo "${simulationPath}"
+                            sh "cp ${resultPath}/${simulationPath}/*.log ${reportPath}"
 
-                        sh 'mvn gatling:test -Dgatling.reportsOnly=report'
+                            sh 'mvn gatling:test -Dgatling.reportsOnly=report'
+                        }
                     }
                 }
             }
