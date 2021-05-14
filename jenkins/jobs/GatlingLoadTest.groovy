@@ -1,6 +1,6 @@
 import groovy.json.JsonSlurper
 
-def jobList = new JsonSlurper().parseText(new File("${WORKSPACE}/jenkins/configs/GatlingLoadTest.jobs.json").text)
+def jobList = new JsonSlurper().parseText(new File("${WORKSPACE}/jenkins/configs/GatlingLoadTestJobs.json").text)
 
 jobList.each { job ->
     pipelineJob(job.name) {
@@ -12,6 +12,7 @@ jobList.each { job ->
 
         parameters {
             stringParam('TargetServer', job.target, 'Target Server')
+            stringParam('Branch', job.branch, 'Source Branch')
         }
 
         logRotator {
