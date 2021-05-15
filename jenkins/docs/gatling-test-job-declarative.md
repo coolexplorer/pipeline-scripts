@@ -12,6 +12,9 @@ This scripts are built by [Build Job DSL](create-job-dsl-build.md) and finally w
 
 ```console
 jenkins
+├── agent
+│   └── k8s
+│       └── maven.yaml
 ├── configs
 │   └── GatlingLoadTestJobs.json
 ├── jobs
@@ -20,6 +23,38 @@ jenkins
 │   └── GatlingLoadTest.groovy
 └── views
     └── GatlingView.groovy
+```
+
+### Agent - k8s agent
+`agent/k8s/maven.yaml`
+
+In this example, I'm going to use the k8s agent because my Jenkins service is operating on the Kubernetes and `Kubernetes Plugin` is offering `Pod template` which make creating pods easy. This is quite helpful if you don't have other slaves to use. 
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: jenkins
+    type: agent
+spec:
+  containers:
+  # jnlp is the Jenkins agent to interact with Jenkins Controller(master)
+  - name: jnlp
+    env:
+    - name: CONTAINER_ENV_VAR
+      value: jnlp
+    tty: true
+  - name: maven
+    image: maven:3.3.9-jdk-8-alpine
+    command:
+    - cat
+    tty: true
+  - name: busybox
+    image: busybox
+    command:
+    - cat
+    tty: true
 ```
 
 ### Configuration
@@ -176,3 +211,31 @@ pipeline {
     }
 }
 ```
+
+### Gatling report publishing to Jenkins
+
+Test result history is important for any test. For this, `HTML Publisher plugin` is a good option. After conducting the Gatling test, we can get the report made by Gatling. 
+
+- publisHTML usage
+```groovy
+publishHTML target: [
+    allowMissing: false,
+    alwaysLinkToLastBuild: false,
+    keepAll: true,
+    reportDir: "${reportPath}",
+    reportFiles: 'index.html',
+    reportName: 'Gatlinge report'
+]
+```
+![jenkins-published-report](../../resource/images/jenkins-published-report.png)
+
+- Gatling Report
+
+### Troubleshooting
+Maybe you can get the errors about security like below when you see the Gatling report.
+![content-security-policy](../../resource/images/content_securiy_policy.png)
+
+Then, you need to set the system property on the `Manage Jenkins > Script console`.
+```console
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+``` 
