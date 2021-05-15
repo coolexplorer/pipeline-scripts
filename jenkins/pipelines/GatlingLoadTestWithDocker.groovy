@@ -67,7 +67,7 @@ pipeline {
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: "target/gatling/report",
+                            reportDir: "${reportPath}",
                             reportFiles: 'index.html',
                             reportName: 'Gatlinge report'
                         ]

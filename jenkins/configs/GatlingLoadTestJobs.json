@@ -8,5 +8,15 @@
       "credential": "pipeilne_access_token"
     },
     "branch": "main"
+  },
+  {
+    "name": "Gatling.Load.Test.With.Docker",
+    "scriptPath": "jenkins/pipelines/GatlingLoadTestWithDocker.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/Add_build_job_dsl_job",
+      "credential": "pipeilne_access_token"
+    },
+    "branch": "main"
   }
 ]
