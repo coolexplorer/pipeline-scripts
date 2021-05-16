@@ -3,7 +3,8 @@
 pipeline {
     agent {
         kubernetes {
-            yamlFile 'jenkins/agent/k8s/docker.yaml'
+            // My cluster is running on the docker container via kind. So, for using docker on the agent, need to set up dind(docker-in-docker).
+            yamlFile 'jenkins/agent/k8s/docker-dind.yaml'
         }
     }
 

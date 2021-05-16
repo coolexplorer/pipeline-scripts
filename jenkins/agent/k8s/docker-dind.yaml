@@ -16,7 +16,6 @@ spec:
     command:
     - cat
     tty: true
-  # docker-in-docer
   - name: docker
     image: docker:19.03.1
     command: ['sleep', '99d']
