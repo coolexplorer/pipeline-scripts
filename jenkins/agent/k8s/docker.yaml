@@ -11,20 +11,25 @@ spec:
     - name: CONTAINER_ENV_VAR
       value: jnlp
     tty: true
-  - name: docker
-    image: docker
-    command:
-    - cat
-    tty: true
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
   - name: busybox
     image: busybox
     command:
     - cat
     tty: true
+  - name: docker
+    image: docker:19.03.1-dind
+    securityContext:
+      privileged: true
+    env:
+      - name: DOCKER_TLS_CERTDIR
+        value: ""
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - name: docker-sock
+      mountPath: /var/run/docker.sock
   volumes:
-  - name: dockersock
+  - name: docker-sock
     hostPath:
       path: /var/run/docker.sock
