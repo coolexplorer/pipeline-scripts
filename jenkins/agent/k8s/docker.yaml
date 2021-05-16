@@ -16,18 +16,25 @@ spec:
     command:
     - cat
     tty: true
+  # docker-in-docer
   - name: docker
-    image: docker:latest
-    command:
-    - cat
-    tty: true
+    image: docker:19.03.1
+    command: ['sleep', '99d']
+    env:
+      - name: DOCKER_HOST
+        value: tcp://localhost:2375
+  - name: docker-daemon
+    image: docker:19.03.1-dind
+    env:
+      - name: DOCKER_TLS_CERTDIR
+        value: ""
     securityContext:
       privileged: true
     volumeMounts:
-    - name: docker-sock
-      mountPath: /var/run/docker.sock
+        - name: cache
+          mountPath: /var/lib/docker
   volumes:
-  - name: docker-sock
-    hostPath:
-      path: /var/run/docker.sock
-      type: File
+    - name: cache
+      hostPath:
+        path: /tmp
+        type: Directory
