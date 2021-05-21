@@ -12,7 +12,7 @@ jobList.each { job ->
         parameters {
             stringParam('TargetServer', job.target, 'Target Server')
             stringParam('Branch', job.branch, 'Source Branch')
-            stringParam('Usesrs', '', 'Test User counts')
+            stringParam('Users', '', 'Test User counts')
             stringParam('Duration', '', 'Test duration')
             stringParam('RampUpDuration', '', 'Test Ramp up duration')
             choiceParam('DurationUnit', ['minutes', 'seconds', 'hours'], 'Duration Unit')
