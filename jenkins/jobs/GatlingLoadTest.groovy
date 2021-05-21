@@ -17,6 +17,7 @@ jobList.each { job ->
             stringParam('RampUpDuration', '', 'Test Ramp up duration')
             choiceParam('DurationUnit', ['minutes', 'seconds', 'hours'], 'Duration Unit')
             stringParam('Scenario', '', 'Test Ramp up duration')
+            stringParam('Image', 'coolexplorer/maven-gatling:main', 'Docker image (for Gatling test with docker)')
         }
 
         logRotator {
