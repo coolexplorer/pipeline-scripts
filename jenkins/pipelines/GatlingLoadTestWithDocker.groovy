@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+def DOCKER_NAME = "loadgen"
+
 pipeline {
     agent {
         kubernetes {
@@ -26,7 +28,7 @@ pipeline {
                 container('docker') {
                     script {
                         // Remove the docker container 
-                        sh "docker rm ${params.Image}"
+                        sh "docker rm ${DOCKER_NAME}"
                     }
                 }
             }
@@ -62,7 +64,7 @@ pipeline {
                         script {
                             sh "cat ./load_profile.env"
 
-                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=loadgen ${params.Image}"
+                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} ${params.Image}"
                             def gatling_command = "bash -c \"mvn gatling:test\""
 
                             sh "${docker_command} ${gatling_command}"
@@ -76,7 +78,7 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        sh "docker rm ${params.Image}"
+                        sh "docker rm ${DOCKER_NAME}"
                     }
                 }
             }
