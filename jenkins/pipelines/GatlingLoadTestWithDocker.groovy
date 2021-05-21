@@ -21,6 +21,16 @@ pipeline {
             }
         }
 
+        stage('Initialize environment') {
+            steps {
+                container('docker') {
+                    // Kill the docker container 
+                    sh "docker stop ${params.Image}"
+                    sh "docker rm ${params.Image}"
+                }
+            }
+        }
+
         stage('Make the load profile') {
             steps {
                 container('docker') {
