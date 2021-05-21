@@ -73,7 +73,7 @@ pipeline {
                             sh "cat ./load_profile.env"
 
                             def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/${repositoryPath}\":\"/${testResultPath}/target\" ${params.Image}"
-                            def gatling_command = "bash -c \";mvn gatling:test;chmod 777 -R /gatling-test/target\""
+                            def gatling_command = "bash -c \"mvn gatling:test;chmod 777 -R /gatling-test/target\""
 
                             sh "${docker_command} ${gatling_command}"
 
