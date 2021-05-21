@@ -37,7 +37,7 @@ pipeline {
 
                             echo "Environment variables : ${loadProfile}"
 
-                            writeFile(file: "load_profile.env", text: loadProfile)
+                            writeFile(file: "./load_profile.env", text: loadProfile)
                         }
                     }
                 }
@@ -49,8 +49,8 @@ pipeline {
                 container('docker') {
                     dir('maven-gatling') {
                         script {
-                            echo "cat load_profile.env"
-                            def docker_command = "docker run --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=loadgen ${params.Image}"
+                            sh "cat ./load_profile.env"
+                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=loadgen ${params.Image}"
                             def gatling_command = "bash -c \"mvn gatling:test\""
                             sh "${docker_command} ${gatling_command}"
                         }
