@@ -73,12 +73,29 @@ pipeline {
                             sh "cat ./load_profile.env"
 
                             def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/${REPOSITORY_PATH}/${TEST_RESULT_PATH}/target\":\"/${TEST_RESULT_PATH}/target\" ${params.Image}"
-                            def gatling_command = "bash -c \"mvn gatling:test;chmod 777 -R /gatling-test/target\""
+                            def gatling_command = "bash -c \"mvn gatling:test -Dgatling.reportsOnly=report;chmod 777 -R /gatling-test/target\""
 
                             sh "${docker_command} ${gatling_command}"
 
                             sh "ls ./gatling-test"
                         }
+                    }
+                }
+            }
+        }
+
+        stage('Publish gatling report') {
+            steps {
+                container('maven') {
+                    dir('maven-gatling') {
+                        publishHTML target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: "${TEST_RESULT_PATH}/target/gatling/report",
+                            reportFiles: 'index.html',
+                            reportName: 'Gatling_report'
+                        ]
                     }
                 }
             }

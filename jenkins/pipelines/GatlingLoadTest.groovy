@@ -93,7 +93,7 @@ pipeline {
                             keepAll: true,
                             reportDir: "target/gatling/report",
                             reportFiles: 'index.html',
-                            reportName: 'Gatlinge report'
+                            reportName: 'Gatlinge_report'
                         ]
                     }
                 }
