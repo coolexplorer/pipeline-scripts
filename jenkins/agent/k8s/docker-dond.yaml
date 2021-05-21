@@ -16,14 +16,17 @@ spec:
     command:
     - cat
     tty: true
-  - name: maven
-    image: maven:3.3.9-jdk-8-alpine
+  - name: docker
+    image: docker:latest
     command:
     - cat
     tty: true
+    securityContext:
+      privileged: true
     volumeMounts:
-      - mountPath: "/root/.m2"
-        name: m2
-  - name: m2
-      persistentVolumeClaim:
-        claimName: m2
+    - name: docker-sock
+      mountPath: /var/run/docker.sock
+  volumes:
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock

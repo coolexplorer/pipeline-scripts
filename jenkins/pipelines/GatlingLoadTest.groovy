@@ -33,6 +33,30 @@ pipeline {
             }
         }
 
+        stage('Make the load profile') {
+            steps {
+                container('maven') {
+                    dir('maven-gatling') {
+                        script {
+                            def loadProfile = """
+                            #!/bin/bash
+                            export TARGET_SERVER=${params.TargetServer}
+                            export USERS=${params.Users}
+                            export DURATION=${params.Duration}
+                            export RAMPUP_DURATION=${params.RampUpDuration}
+                            export DURATION_UNIT=${params.DurationUnit}
+                            export SCENARIO=${params.Scenario}
+                            """.stripIndent()
+
+                            echo "Environment variables : ${loadProfile}"
+
+                            writeFile file: "./load_profile.sh", text: loadProfile
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Run Gatling test') {
             steps {
                 container('maven') {
@@ -67,7 +91,7 @@ pipeline {
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: "${reportPath}",
+                            reportDir: "target/gatling/report",
                             reportFiles: 'index.html',
                             reportName: 'Gatlinge report'
                         ]
