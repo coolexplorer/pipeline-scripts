@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 
 def DOCKER_NAME = "loadgen"
+def TEST_RESULT_PATH = "gatling-test"
+def REPOSITORY_PATH = "maven-gatling"
 
 pipeline {
     agent {
@@ -43,7 +45,7 @@ pipeline {
         stage('Make the load profile') {
             steps {
                 container('docker') {
-                    dir('maven-gatling') {
+                    dir("${REPOSITORY_PATH}") {
                         script {
                             def loadProfile = """
                             TARGET_SERVER=${params.TargetServer}
@@ -66,14 +68,16 @@ pipeline {
         stage('Run Gatling test') {
             steps {
                 container('docker') {
-                    dir('maven-gatling') {
+                    dir("${REPOSITORY_PATH}") {
                         script {
                             sh "cat ./load_profile.env"
 
-                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} ${params.Image}"
-                            def gatling_command = "bash -c \"mvn gatling:test\""
+                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/${REPOSITORY_PATH}/${TEST_RESULT_PATH}/target\":\"/${TEST_RESULT_PATH}/target\" ${params.Image}"
+                            def gatling_command = "bash -c \"mvn gatling:test;chmod 777 -R /gatling-test/target\""
 
                             sh "${docker_command} ${gatling_command}"
+
+                            sh "ls ./gatling-test"
                         }
                     }
                 }
