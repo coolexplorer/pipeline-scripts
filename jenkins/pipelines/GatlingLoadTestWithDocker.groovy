@@ -32,11 +32,14 @@ pipeline {
                 container('docker') {
                     script {
                         try {
+                            // Delete docker image
+                            sh "docker rmi ${params.Image}"
+
                             // Remove the docker container 
                             sh "docker rm ${DOCKER_NAME}"
                         } catch (error) {
                             echo "${error.message}"
-                            echo "${DOCKER_NAME} container is not exist."
+                            echo "${DOCKER_NAME} container/image is not exist."
                         }
                         
                     }
@@ -73,6 +76,8 @@ pipeline {
                     dir("${repositoryPath}") {
                         script {
                             sh "cat ./load_profile.env"
+
+                            sh "docker pull ${params.Image}"
 
                             def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/target\":\"${gatlingWorkPath}/target\" ${params.Image}"
                             def gatling_command = "bash -c \"mvn gatling:test -Dgatling.noReports=true;chmod 777 -R ${gatlingWorkPath}/target/*\""
