@@ -24,9 +24,10 @@ pipeline {
         stage('Initialize environment') {
             steps {
                 container('docker') {
-                    // Kill the docker container 
-                    sh "docker stop ${params.Image}"
-                    sh "docker rm ${params.Image}"
+                    script {
+                        // Remove the docker container 
+                        sh "docker rm ${params.Image}"
+                    }
                 }
             }
         }
@@ -60,10 +61,22 @@ pipeline {
                     dir('maven-gatling') {
                         script {
                             sh "cat ./load_profile.env"
+
                             def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=loadgen ${params.Image}"
                             def gatling_command = "bash -c \"mvn gatling:test\""
+
                             sh "${docker_command} ${gatling_command}"
                         }
+                    }
+                }
+            }
+        }
+
+        stage('Remove the container ') {
+            steps {
+                container('docker') {
+                    script {
+                        sh "docker rm ${params.Image}"
                     }
                 }
             }
