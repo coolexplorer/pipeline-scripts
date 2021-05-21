@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 
 def DOCKER_NAME = "loadgen"
+def reportPath = "target/gatling/report"
+def resultPath = "target/gatling"
 def testResultPath = "gatling-test"
 def repositoryPath = "maven-gatling"
 
@@ -82,12 +84,16 @@ pipeline {
             }
         }
 
-        stage('Generate Report') {
+        stage('Generate Gatling report') {
             steps {
                 container('maven') {
                     dir("${repositoryPath}") {
                         script {
-                            sh "mkdir -p target/gatling/report"
+                            sh "mkdir -p ${reportPath}"
+
+                            def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk '{print \$9}'", returnStdout: true
+                            
+                            sh "cp ${resultPath}/${simulationPath.trim()}/simulation.log ${reportPath}/simulation.log"
                             sh 'mvn gatling:test -Dgatling.reportsOnly=report'
                         }
                     }

@@ -62,7 +62,7 @@ pipeline {
             steps {
                 container('maven') {
                     dir("${repositoryPath}") {
-                        sh 'mvn gatling:test -Dgatling.noReports=true'
+                        sh './load_profile.sh && mvn gatling:test -Dgatling.noReports=true'
                     }
                 }
             }
