@@ -73,7 +73,7 @@ pipeline {
                             sh "cat ./load_profile.env"
 
                             def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/target\":\"/${testResultPath}/target\" ${params.Image}"
-                            def gatling_command = "bash -c \"mvn gatling:test -Dgatling.noReports=true;mkdir -p /${testResultPath}/target/report;mvn gatling:test -Dgatling.reportsOnly=report\""
+                            def gatling_command = "bash -c \"mvn gatling:test -Dgatling.noReports=true\""
 
                             sh "${docker_command} ${gatling_command}"
                         }
@@ -82,18 +82,18 @@ pipeline {
             }
         }
 
-        // stage('Generate Report') {
-        //     steps {
-        //         container('maven') {
-        //             dir("${repositoryPath}") {
-        //                 script {
-        //                     sh "mkdir -p target/gatling/report"
-        //                     sh 'mvn gatling:test -Dgatling.reportsOnly=report'
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Generate Report') {
+            steps {
+                container('maven') {
+                    dir("${repositoryPath}") {
+                        script {
+                            sh "mkdir -p target/gatling/report"
+                            sh 'mvn gatling:test -Dgatling.reportsOnly=report'
+                        }
+                    }
+                }
+            }
+        }
 
         stage('Publish gatling report') {
             steps {
