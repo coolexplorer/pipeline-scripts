@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 
 def DOCKER_NAME = "loadgen"
-def TEST_RESULT_PATH = "gatling-test"
-def REPOSITORY_PATH = "maven-gatling"
+def testResultPath = "target"
+def repositoryPath = "maven-gatling"
 
 pipeline {
     agent {
@@ -45,7 +45,7 @@ pipeline {
         stage('Make the load profile') {
             steps {
                 container('docker') {
-                    dir("${REPOSITORY_PATH}") {
+                    dir("${repositoryPath}") {
                         script {
                             def loadProfile = """
                             TARGET_SERVER=${params.TargetServer}
@@ -68,12 +68,12 @@ pipeline {
         stage('Run Gatling test') {
             steps {
                 container('docker') {
-                    dir("${REPOSITORY_PATH}") {
+                    dir("${repositoryPath}") {
                         script {
                             sh "cat ./load_profile.env"
 
-                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/${REPOSITORY_PATH}/${TEST_RESULT_PATH}/target\":\"/${TEST_RESULT_PATH}/target\" ${params.Image}"
-                            def gatling_command = "bash -c \"mkdir -p target/gatling/report;mvn gatling:test -Dgatling.reportsOnly=report;chmod 777 -R /gatling-test/target\""
+                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/${REPOSITORY_PATH}\":\"/${testResultPath}/target\" ${params.Image}"
+                            def gatling_command = "bash -c \";mvn gatling:test;chmod 777 -R /gatling-test/target\""
 
                             sh "${docker_command} ${gatling_command}"
 
@@ -84,15 +84,28 @@ pipeline {
             }
         }
 
+        stage('Generate Report') {
+            steps {
+                container('maven') {
+                    dir("${repositoryPath}") {
+                        script {
+                            sh "mkdir -p target/gatling/report"
+                            sh 'mvn gatling:test -Dgatling.noReports=true'
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Publish gatling report') {
             steps {
                 container('maven') {
-                    dir('maven-gatling') {
+                    dir("${repositoryPath}") {
                         publishHTML target: [
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: "${TEST_RESULT_PATH}/target/gatling/report",
+                            reportDir: "target/gatling/report",
                             reportFiles: 'index.html',
                             reportName: 'Gatling_report'
                         ]
