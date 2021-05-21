@@ -3,7 +3,7 @@
 def DOCKER_NAME = "loadgen"
 def reportPath = "target/gatling/report"
 def resultPath = "target/gatling"
-def testPath = "gatling-test"
+def gatlingWorkPath = "/gatling-test"
 def repositoryPath = "maven-gatling"
 
 pipeline {
@@ -74,8 +74,8 @@ pipeline {
                         script {
                             sh "cat ./load_profile.env"
 
-                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/target\":\"./${testPath}/target\" ${params.Image}"
-                            def gatling_command = "bash -c \"mvn gatling:test -Dgatling.noReports=true\""
+                            def docker_command = "docker run --rm --network host --ulimit nofile=20480:20480 --env-file ./load_profile.env --name=${DOCKER_NAME} -v \"${WORKSPACE}/target\":\"${gatlingWorkPath}/target\" ${params.Image}"
+                            def gatling_command = "bash -c \"mvn gatling:test -Dgatling.noReports=true;chmod 777 -R ${gatlingWorkPath}/target/*\""
 
                             sh "${docker_command} ${gatling_command}"
                         }
