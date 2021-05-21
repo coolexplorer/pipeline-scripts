@@ -25,14 +25,14 @@ spec:
   - name: docker-daemon
     image: docker:19.03.1-dind
     env:
-      - name: DOCKER_TLS_CERTDIR
-        value: ""
+    - name: DOCKER_TLS_CERTDIR
+      value: ""
     securityContext:
       privileged: true
     volumeMounts:
         - name: cache
           mountPath: /var/lib/docker
-   - name: maven
+  - name: maven
     image: maven:3.3.9-jdk-8-alpine
     command:
     - cat
