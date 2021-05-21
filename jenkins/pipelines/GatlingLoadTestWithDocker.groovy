@@ -27,8 +27,14 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        // Remove the docker container 
-                        sh "docker rm ${DOCKER_NAME}"
+                        try {
+                            // Remove the docker container 
+                            sh "docker rm ${DOCKER_NAME}"
+                        } catch (error) {
+                            echo "${error.message}"
+                            echo "${DOCKER_NAME} container is not exist."
+                        }
+                        
                     }
                 }
             }
@@ -69,16 +75,6 @@ pipeline {
 
                             sh "${docker_command} ${gatling_command}"
                         }
-                    }
-                }
-            }
-        }
-
-        stage('Remove the container ') {
-            steps {
-                container('docker') {
-                    script {
-                        sh "docker rm ${DOCKER_NAME}"
                     }
                 }
             }
