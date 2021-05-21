@@ -76,8 +76,6 @@ pipeline {
                             def gatling_command = "bash -c \"mvn gatling:test;chmod 777 -R /gatling-test/target\""
 
                             sh "${docker_command} ${gatling_command}"
-
-                            sh "ls ./gatling-test"
                         }
                     }
                 }
