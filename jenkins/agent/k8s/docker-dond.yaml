@@ -26,6 +26,11 @@ spec:
     volumeMounts:
     - name: docker-sock
       mountPath: /var/run/docker.sock
+  - name: maven
+    image: maven:3.3.9-jdk-8-alpine
+    command:
+    - cat
+    tty: true
   volumes:
   - name: docker-sock
     hostPath:
