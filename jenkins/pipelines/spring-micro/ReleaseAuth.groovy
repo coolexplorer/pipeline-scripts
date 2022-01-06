@@ -44,7 +44,7 @@ pipeline {
         stage('Clone the source') {
             steps {
                 checkout([$class: 'GitSCM',
-                        branches: [[name: "*/${params.Branch}"]],
+                        branches: [[name: "*/develop"]],
                         doGenerateSubmoduleConfigurations: false,
                         extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'spring-micro-auth']],
                         submoduleCfg: [],
