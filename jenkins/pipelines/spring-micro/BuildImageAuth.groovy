@@ -55,17 +55,17 @@ pipeline {
         always {
             cleanWs()
         }
-        success {
-            // script {
-            //     def message = "*${currentBuild.result}* - *${env.JOB_NAME}* (<${env.BUILD_URL}|Link>)"
-            //     slackSend channel: "#yaybooh-project", message: "${message}", color: "good", tokenCredentialId: "slack-token", botUser: true
-            // }
-        }
-        failure {
-            // script {
-            //     def message = "*${currentBuild.result}* - *${env.JOB_NAME}* (<${env.BUILD_URL}|Link>)"
-            //     slackSend channel: "#yaybooh-project", message: "${message}", color: "danger", tokenCredentialId: "slack-token", botUser: true
-            // }
-        }
+        // success {
+        //     script {
+        //         def message = "*${currentBuild.result}* - *${env.JOB_NAME}* (<${env.BUILD_URL}|Link>)"
+        //         slackSend channel: "#yaybooh-project", message: "${message}", color: "good", tokenCredentialId: "slack-token", botUser: true
+        //     }
+        // }
+        // failure {
+        //     script {
+        //         def message = "*${currentBuild.result}* - *${env.JOB_NAME}* (<${env.BUILD_URL}|Link>)"
+        //         slackSend channel: "#yaybooh-project", message: "${message}", color: "danger", tokenCredentialId: "slack-token", botUser: true
+        //     }
+        // }
     }
 }
