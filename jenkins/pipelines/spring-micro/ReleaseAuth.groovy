@@ -58,6 +58,7 @@ pipeline {
                 container('maven') {
                     dir("${repositoryPath}") {                
                         sh "mvn clean verify"
+                    }
                 }
             }
         }
