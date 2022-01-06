@@ -1,4 +1,4 @@
-sectionedView('Build') {
+sectionedView('Release') {
     filterBuildQueue()
     filterExecutors()
     sections {
