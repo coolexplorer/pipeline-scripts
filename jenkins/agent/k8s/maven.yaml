@@ -12,7 +12,7 @@ spec:
       value: jnlp
     tty: true
   - name: maven
-    image: maven:3.3.9-jdk-8-alpine
+    image: maven:3.8.4-openjdk-11
     command:
     - cat
     tty: true
@@ -21,3 +21,14 @@ spec:
     command:
     - cat
     tty: true
+  - name: docker
+    image: docker:18.06.1
+    command: ["tail", "-f", "/dev/null"]
+    imagePullPolicy: Always
+    volumeMounts:
+      - name: docker
+        mountPath: /var/run/docker.sock
+  volumes:
+    - name: docker
+      hostPath:
+        path: /var/run/docker.sock
