@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Build api server') {
+        stage('Build auth') {
             steps {
                 container('maven') {
                     dir("${repositoryPath}") {
