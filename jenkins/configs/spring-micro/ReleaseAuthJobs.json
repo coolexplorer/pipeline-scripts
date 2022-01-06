@@ -1,7 +1,7 @@
 [
     {
       "name": "Release.Auth",
-      "scriptPath": "jenkins/pipeline/ReleaseAuth.groovy",
+      "scriptPath": "jenkins/pipelines/spring-micro/ReleaseAuth.groovy",
       "git": {
         "url": "https://github.com/coolexplorer/pipeline-scripts.git",
         "branch": "*/develop",
