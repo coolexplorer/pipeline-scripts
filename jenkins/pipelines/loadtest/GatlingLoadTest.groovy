@@ -2,6 +2,7 @@
 
 def reportPath = "target/gatling/report"
 def resultPath = "target/gatling"
+def repositoryPath = "maven-gatling"
 
 pipeline {
     agent {
@@ -26,8 +27,32 @@ pipeline {
         stage('Initialize Gatling test') {
             steps {
                 container('maven') {
-                    dir('maven-gatling') {
+                    dir("${repositoryPath}") {
                         sh "mkdir -p ${reportPath}"
+                    }
+                }
+            }
+        }
+
+        stage('Make the load profile') {
+            steps {
+                container('maven') {
+                    dir("${repositoryPath}") {
+                        script {
+                            def loadProfile = """
+                            #!/bin/bash
+                            export TARGET_SERVER=${params.TargetServer}
+                            export USERS=${params.Users}
+                            export DURATION=${params.Duration}
+                            export RAMPUP_DURATION=${params.RampUpDuration}
+                            export DURATION_UNIT=${params.DurationUnit}
+                            export SCENARIO=${params.Scenario}
+                            """.stripIndent()
+
+                            echo "Environment variables : ${loadProfile}"
+
+                            writeFile file: "./load_profile.sh", text: loadProfile
+                        }
                     }
                 }
             }
@@ -36,8 +61,8 @@ pipeline {
         stage('Run Gatling test') {
             steps {
                 container('maven') {
-                    dir('maven-gatling') {
-                        sh 'mvn gatling:test -Dgatling.noReports=true'
+                    dir("${repositoryPath}") {
+                        sh './load_profile.sh && mvn gatling:test -Dgatling.noReports=true'
                     }
                 }
             }
@@ -46,7 +71,7 @@ pipeline {
         stage('Generate Gatling report') {
             steps {
                 container('maven') {
-                    dir('maven-gatling') {
+                    dir("${repositoryPath}") {
                         script {
                             def simulationPath = sh script: "ls -l ${resultPath} | grep loadtestsimulation | awk '{print \$9}'", returnStdout: true
 
@@ -62,14 +87,14 @@ pipeline {
         stage('Publish gatling report') {
             steps {
                 container('maven') {
-                    dir('maven-gatling') {
+                    dir("${repositoryPath}") {
                         publishHTML target: [
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
-                            reportDir: "${reportPath}",
+                            reportDir: "target/gatling/report",
                             reportFiles: 'index.html',
-                            reportName: 'Gatlinge report'
+                            reportName: 'Gatling_report'
                         ]
                     }
                 }

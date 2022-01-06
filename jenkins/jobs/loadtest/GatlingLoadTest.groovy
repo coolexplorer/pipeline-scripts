@@ -9,10 +9,15 @@ jobList.each { job ->
             scanQueueFor('DISABLED')
         }
 
-
         parameters {
             stringParam('TargetServer', job.target, 'Target Server')
             stringParam('Branch', job.branch, 'Source Branch')
+            stringParam('Users', '', 'Test User counts')
+            stringParam('Duration', '', 'Test duration')
+            stringParam('RampUpDuration', '', 'Test Ramp up duration')
+            choiceParam('DurationUnit', ['minutes', 'seconds', 'hours'], 'Duration Unit')
+            stringParam('Scenario', '', 'Test Ramp up duration')
+            stringParam('Image', 'coolexplorer/maven-gatling:main', 'Docker image (for Gatling test with docker)')
         }
 
         logRotator {

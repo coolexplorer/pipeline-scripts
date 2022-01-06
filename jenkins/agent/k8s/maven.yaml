@@ -16,11 +16,6 @@ spec:
     command:
     - cat
     tty: true
-  - name: busybox
-    image: busybox
-    command:
-    - cat
-    tty: true
   - name: docker
     image: docker:18.06.1
     command: ["tail", "-f", "/dev/null"]

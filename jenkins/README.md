@@ -25,7 +25,8 @@ To use the pipeline in Jenkins, there are several plugins. In this project, I'm 
 ## Examples
 |        Category          |         Example          |
 |--------------------------|--------------------------|
-|   Set up the Job DSL     | [Create Job DSL build Job](docs/create-job-dsl-build.md) |
-|   Job DLS structure      | [Create simple pipeline job](docs/create-simple-pipeline.md) | 
+| Set up the Job DSL       | [Create Job DSL build Job](docs/create-job-dsl-build.md) |
+| Job DLS structure        | [Create simple pipeline job](docs/create-simple-pipeline.md) | 
 | Jenkins Agent            | [Kubernetes dynamic agent provisioning](docs/k8s-pod-template.md) |
 | Pipeline examples        | [Gatling Test Job - Declarative pipeline](docs/gatling-test-job-declarative.md) |
+|                          | [Gatling Test Job with docker container](docs/gatling-test-job-with-docker.md) |

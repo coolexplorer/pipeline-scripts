@@ -4,7 +4,17 @@
     "scriptPath": "jenkins/pipelines/loadtest/GatlingLoadTest.groovy",
     "git": {
       "url": "https://github.com/coolexplorer/pipeline-scripts.git",
-      "branch": "*/Add_build_job_dsl_job",
+      "branch": "*/add_gatling_test_job_with_docker",
+      "credential": "pipeilne_access_token"
+    },
+    "branch": "main"
+  },
+  {
+    "name": "Gatling.Load.Test.With.Docker",
+    "scriptPath": "jenkins/pipelines/GatlingLoadTestWithDocker.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/add_gatling_test_job_with_docker",
       "credential": "pipeilne_access_token"
     },
     "branch": "main"
