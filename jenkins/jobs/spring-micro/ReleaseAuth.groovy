@@ -23,25 +23,6 @@ jobList.each { job ->
             daysToKeep(14)
         }
 
-        properties {
-            pipelineTriggers {
-                triggers {
-                    bitBucketTrigger {
-                        triggers {
-                            bitBucketPPRPullRequestTriggerFilter {
-                                actionFilter {
-                                    bitBucketPPRPullRequestMergedActionFilter {
-                                        allowedBranches(job.git.branch)
-                                        isToApprove(true)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         definition {
             cpsScm {
                 scriptPath(job.scriptPath)
