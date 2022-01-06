@@ -13,6 +13,7 @@ To use the pipeline in Jenkins, there are several plugins. In this project, I'm 
    * Kubernetes plugin
    * Sectioned View : To creat section view
    * Build Blocker
+   * Workspace Cleanup
 
 2. Security option
    You will see error related to the security when you build Job DSL scripts. You can allow them one by one after checking in `Manage Jenkins > Security > In-process Script Approval`

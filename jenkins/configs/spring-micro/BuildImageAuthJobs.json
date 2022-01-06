@@ -7,7 +7,7 @@
       "branch": "*/develop",
       "credential": "GitHub-access-token"
     },
-    "registry": "",
+    "registry": "coolexplorer",
     "branch": "develop",
     "tag" : "0.1.0",
     "profile" : "dev"

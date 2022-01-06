@@ -68,7 +68,11 @@ pipeline {
 
     post {
         always {
-            cleanWs()
+            cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE']])
         }
         // success {
         //     script {
