@@ -1,7 +1,7 @@
 [
     {
       "name": "Build.Image.Auth",
-      "scriptPath": "jenkins/pipeline/BuildImageAuth.groovy",
+      "scriptPath": "jenkins/pipeline/spring-mirco/BuildImageAuth.groovy",
       "git": {
         "url": "https://github.com/coolexplorer/spring-micro-auth.git",
         "branch": "*/develop",

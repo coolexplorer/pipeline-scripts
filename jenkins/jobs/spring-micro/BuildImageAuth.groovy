@@ -2,7 +2,7 @@
 
 import groovy.json.JsonSlurper
 
-def jobList = new JsonSlurper().parseText(new File("${WORKSPACE}/jenkins/config/BuildImageAuth.json").text)
+def jobList = new JsonSlurper().parseText(new File("${WORKSPACE}/jenkins/config/spring-micro/BuildImageAuth.json").text)
 
 jobList.each { job -> 
     pipelineJob(job.name) {
