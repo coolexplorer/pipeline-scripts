@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
 def imageName = "spring-micro-auth"
+def repositoryPath = "spring-micro-auth"
 
 pipeline {
     agent {
@@ -12,14 +13,22 @@ pipeline {
     stages {
         stage('Clone the source') {
             steps {
-                checkout scm
+                checkout([$class: 'GitSCM',
+                        branches: [[name: "*/${params.Branch}"]],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'spring-micro-auth']],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[credentialsId: 'GitHub-access-token', url: 'https://github.com/coolexplorer/spring-micro-auth.git']]]
+                )
             }
         }
 
         stage('Build api server') {
             steps {
                 container('maven') {
-                    sh "mvn clean install"
+                    dir("${repositoryPath}") {
+                        sh "mvn clean install"
+                    }
                 }
             }
         }
@@ -27,8 +36,10 @@ pipeline {
         stage('Docker login') {
             steps {
                 container('docker') {
-                    withCredentials([usernamePassword(credentialsId: 'docker-registry-secret', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "docker login registry.yaybooh.com -u $USERNAME -p $PASSWORD"
+                    dir("${repositoryPath}") {
+                        withCredentials([usernamePassword(credentialsId: 'docker-registry-secret', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh "docker login ${params.Registry} -u $USERNAME -p $PASSWORD"
+                        }
                     }
                 }
             }
@@ -37,7 +48,9 @@ pipeline {
         stage('Build docker image') {
             steps {
                 container('docker') {
-                    sh "docker build --build-arg PROFILE=${params.Profile} --no-cache . -t ${params.Registry}/${imageName}:${params.Tag}"
+                    dir("${repositoryPath}") {
+                        sh "docker build --build-arg PROFILE=${params.Profile} --no-cache . -t ${params.Registry}/${imageName}:${params.Tag}"
+                    }
                 }
             }
         }
@@ -45,7 +58,9 @@ pipeline {
         stage('Push docker image') {
             steps {
                 container('docker') {
-                    sh "docker push ${params.Registry}/${imageName}:${params.Tag}"
+                    dir("${repositoryPath}") {
+                        sh "docker push ${params.Registry}/${imageName}:${params.Tag}"
+                    }
                 }
             }
         }
