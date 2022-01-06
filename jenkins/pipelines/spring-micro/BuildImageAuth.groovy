@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def imageName = "spring-micro-auth"
+def imageName = "coolexplorer/spring-micro-auth"
 def repositoryPath = "spring-micro-auth"
 
 pipeline {
