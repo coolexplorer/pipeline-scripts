@@ -2,13 +2,15 @@
 
 import groovy.json.JsonSlurper
 
-def jobList = new JsonSlurper().parseText(new File("${WORKSPACE}/jenkins/configs/spring-micro/BuildImageAuthJobs.json").text)
+def jobList = new JsonSlurper().parseText(new File("${WORKSPACE}/jenkins/configs/spring-micro/BuildImageSpringMicro.json").text)
 
 jobList.each { job -> 
     pipelineJob(job.name) {
         parameters {
+            stringParam('ProjectName', job.registry, 'Project Name')
             stringParam('Registry', job.registry, 'Registry address')
             stringParam('Branch', job.branch, 'Source Branch')
+            stringParam('ImageName', job.branch, 'Docker Image Name')
             stringParam('Tag', job.tag, 'Image tag - ex) 0.1.0')
             activeChoiceParam('Profile') {
                 description('Select Profile.')

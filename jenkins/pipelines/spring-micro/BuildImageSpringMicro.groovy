@@ -1,8 +1,5 @@
 #!/usr/bin/env groovy
 
-def imageName = "coolexplorer/spring-micro-auth"
-def repositoryPath = "spring-micro-auth"
-
 pipeline {
     agent {
         kubernetes {
@@ -16,9 +13,9 @@ pipeline {
                 checkout([$class: 'GitSCM',
                         branches: [[name: "*/${params.Branch}"]],
                         doGenerateSubmoduleConfigurations: false,
-                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'spring-micro-auth']],
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "${params.ProjectName}"]],
                         submoduleCfg: [],
-                        userRemoteConfigs: [[credentialsId: 'GitHub-access-token', url: 'https://github.com/coolexplorer/spring-micro-auth.git']]]
+                        userRemoteConfigs: [[credentialsId: 'GitHub-access-token', url: "https://github.com/coolexplorer/${params.ProjectName}.git"]]]
                 )
             }
         }
@@ -49,7 +46,7 @@ pipeline {
             steps {
                 container('docker') {
                     dir("${repositoryPath}") {
-                        sh "docker build --build-arg PROFILE=${params.Profile} --no-cache . -t ${params.Registry}/${imageName}:${params.Tag}"
+                        sh "docker build --build-arg PROFILE=${params.Profile} --no-cache . -t ${params.Registry}/${params.ImageName}:${params.Tag}"
                     }
                 }
             }

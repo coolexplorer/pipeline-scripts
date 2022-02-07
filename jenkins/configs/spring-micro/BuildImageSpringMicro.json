@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Build.Image.Auth",
+    "scriptPath": "jenkins/pipelines/spring-micro/BuildImageSpringMicro.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/develop",
+      "credential": "GitHub-access-token"
+    },
+    "projectName": "spring-micro-auth",
+    "registry": "registry.hub.docker.com",
+    "branch": "develop",
+    "imageName" : "coolexplorer/spring-micro-auth",
+    "tag" : "0.1.0",
+    "profile" : "prod"
+  },
+  {
+    "name": "Build.Image.Session",
+    "scriptPath": "jenkins/pipelines/spring-micro/BuildImageSpringMicro.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/develop",
+      "credential": "GitHub-access-token"
+    },
+    "projectName": "spring-micro-session",
+    "registry": "registry.hub.docker.com",
+    "branch": "develop",
+    "imageName" : "coolexplorer/spring-micro-session",
+    "tag" : "0.1.0",
+    "profile" : "prod"
+  }
+]
