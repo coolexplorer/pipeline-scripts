@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Release.Auth",
+    "scriptPath": "jenkins/pipelines/spring-micro/ReleaseAuth.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/develop",
+      "credential": "GitHub-access-token"
+    },
+    "projectName": "spring-micro-auth"
+  },
+  {
+    "name": "Release.Session",
+    "scriptPath": "jenkins/pipelines/spring-micro/ReleaseSession.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/develop",
+      "credential": "GitHub-access-token"
+    },
+    "projectName": "spring-micro-session"
+  }
+]

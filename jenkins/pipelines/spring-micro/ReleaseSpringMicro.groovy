@@ -1,7 +1,5 @@
 #!/usr/bin/env groovy
 
-def repositoryPath = "spring-micro-auth"
-
 def generateReleaseVersion(releaseOption, currentVersion, customReleaseVersion) {
     def currentVersionList = currentVersion.replace('-SNAPSHOT', '').split('\\.')
     def currentVersions = []
@@ -46,9 +44,9 @@ pipeline {
                 checkout([$class: 'GitSCM',
                         branches: [[name: "*/develop"]],
                         doGenerateSubmoduleConfigurations: false,
-                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'spring-micro-auth']],
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "${params.ProjectName}"]],
                         submoduleCfg: [],
-                        userRemoteConfigs: [[credentialsId: 'GitHub-access-token', url: 'https://github.com/coolexplorer/spring-micro-auth.git']]]
+                        userRemoteConfigs: [[credentialsId: 'GitHub-access-token', url: "https://github.com/coolexplorer/${params.ProjectName}.git"]]]
                 )
             }
         }
