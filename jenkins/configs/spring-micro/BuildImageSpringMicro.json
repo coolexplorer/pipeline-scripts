@@ -1,7 +1,7 @@
 [
   {
     "name": "Build.Image.Auth",
-    "scriptPath": "jenkins/pipelines/spring-micro/BuildImageAuth.groovy",
+    "scriptPath": "jenkins/pipelines/spring-micro/BuildImageSpringMicro.groovy",
     "git": {
       "url": "https://github.com/coolexplorer/pipeline-scripts.git",
       "branch": "*/develop",
@@ -16,7 +16,7 @@
   },
   {
     "name": "Build.Image.Session",
-    "scriptPath": "jenkins/pipelines/spring-micro/BuildImageSession.groovy",
+    "scriptPath": "jenkins/pipelines/spring-micro/BuildImageSpringMicro.groovy",
     "git": {
       "url": "https://github.com/coolexplorer/pipeline-scripts.git",
       "branch": "*/develop",
