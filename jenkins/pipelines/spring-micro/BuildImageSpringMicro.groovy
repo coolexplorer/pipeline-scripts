@@ -23,8 +23,10 @@ pipeline {
         stage('Build auth') {
             steps {
                 container('maven') {
-                    dir("${repositoryPath}") {
-                        sh "mvn clean install"
+                    dir("${params.ProjectName}") {
+                        // TODO: Delete excludedGroups if use the agent of linux machine. 
+                        //       Embedded servers of redis and kafka is not working under the pod agent.     
+                        sh 'mvn clean verify -DexcludedGroups=embedded-redis-test,embedded-kafka-test'
                     }
                 }
             }
@@ -33,7 +35,7 @@ pipeline {
         stage('Docker login') {
             steps {
                 container('docker') {
-                    dir("${repositoryPath}") {
+                    dir("${params.ProjectName}") {
                         withCredentials([usernamePassword(credentialsId: 'docker-registry-secret', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh "docker login ${params.Registry} -u $USERNAME -p $PASSWORD"
                         }
@@ -45,7 +47,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 container('docker') {
-                    dir("${repositoryPath}") {
+                    dir("${params.ProjectName}") {
                         sh "docker build --build-arg PROFILE=${params.Profile} --no-cache . -t ${params.Registry}/${params.ImageName}:${params.Tag}"
                     }
                 }
@@ -55,7 +57,7 @@ pipeline {
         stage('Push docker image') {
             steps {
                 container('docker') {
-                    dir("${repositoryPath}") {
+                    dir("${params.ProjectName}") {
                         sh "docker push ${params.Registry}/${imageName}:${params.Tag}"
                     }
                 }

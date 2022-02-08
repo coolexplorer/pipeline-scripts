@@ -54,7 +54,9 @@ pipeline {
         stage('Build') {
             steps {
                 container('maven') {
-                    dir("${params.ProjectName}") {                
+                    dir("${params.ProjectName}") {            
+                        // TODO: Delete excludedGroups if use the agent of linux machine. 
+                        //       Embedded servers of redis and kafka is not working under the pod agent.     
                         sh 'mvn clean verify -DexcludedGroups=embedded-redis-test,embedded-kafka-test'
                     }
                 }
