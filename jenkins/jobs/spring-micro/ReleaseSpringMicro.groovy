@@ -17,7 +17,7 @@ jobList.each { job ->
                 }
             }
             stringParam('CustomReleaseVersion', '', 'Customized Release Version - This option will be adapted when you choose "CUSTOM" option.')
-            stringParam('ProjectName', job.registry, 'Project Name')
+            stringParam('ProjectName', job.projectName, 'Project Name')
         }
 
         logRotator {
