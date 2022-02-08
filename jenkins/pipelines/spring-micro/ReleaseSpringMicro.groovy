@@ -54,7 +54,7 @@ pipeline {
         stage('Build auth') {
             steps {
                 container('maven') {
-                    dir("${repositoryPath}") {                
+                    dir("${params.ProjectName}") {                
                         sh "mvn clean verify"
                     }
                 }
@@ -64,7 +64,7 @@ pipeline {
         stage('Release version') {
             steps {
                 container('maven') {
-                    dir("${repositoryPath}") {                
+                    dir("${params.ProjectName}") {                
                         withCredentials([usernamePassword(credentialsId: 'GitHub-access-token', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             script {
                                 def currentVersion = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
