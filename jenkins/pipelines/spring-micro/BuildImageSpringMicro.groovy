@@ -58,7 +58,7 @@ pipeline {
             steps {
                 container('docker') {
                     dir("${params.ProjectName}") {
-                        sh "docker push ${params.Registry}/${imageName}:${params.Tag}"
+                        sh "docker push ${params.Registry}/${params.ImageName}:${params.Tag}"
                     }
                 }
             }
