@@ -51,11 +51,11 @@ pipeline {
             }
         }
 
-        stage('Build auth') {
+        stage('Build') {
             steps {
                 container('maven') {
                     dir("${params.ProjectName}") {                
-                        sh "mvn clean verify -DexcludedGroups=\"embedded-redis-test\""
+                        sh 'mvn clean verify -DexcludedGroups="embedded-redis-test"'
                     }
                 }
             }
