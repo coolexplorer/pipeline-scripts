@@ -28,5 +28,20 @@
     "imageName" : "coolexplorer/spring-micro-session",
     "tag" : "0.1.0",
     "profile" : "prod"
+  },
+  {
+    "name": "Build.Image.Gateway",
+    "scriptPath": "jenkins/pipelines/spring-micro/BuildImageSpringMicro.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/develop",
+      "credential": "GitHub-access-token"
+    },
+    "projectName": "spring-micro-gateway",
+    "registry": "registry.hub.docker.com",
+    "branch": "develop",
+    "imageName" : "coolexplorer/spring-micro-gateway",
+    "tag" : "0.1.0",
+    "profile" : "prod"
   }
 ]
