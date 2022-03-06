@@ -20,7 +20,7 @@ pipeline {
             }
         }
 
-        stage('Build auth') {
+        stage('Build') {
             steps {
                 container('maven') {
                     dir("${params.ProjectName}") {
