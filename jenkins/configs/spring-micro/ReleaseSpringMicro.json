@@ -18,5 +18,15 @@
       "credential": "GitHub-access-token"
     },
     "projectName": "spring-micro-session"
+  },
+  {
+    "name": "Release.Gateway",
+    "scriptPath": "jenkins/pipelines/spring-micro/ReleaseSpringMicro.groovy",
+    "git": {
+      "url": "https://github.com/coolexplorer/pipeline-scripts.git",
+      "branch": "*/develop",
+      "credential": "GitHub-access-token"
+    },
+    "projectName": "spring-micro-gateway"
   }
 ]
